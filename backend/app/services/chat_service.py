@@ -3,7 +3,7 @@ import app.rag.state as state
 from app.rag.rag_chain import create_chain
 
 def ask_question(question):
-
+    print("VECTORSTORE =", state.VECTORSTORE)
     if state.VECTORSTORE is None:
 
         return {

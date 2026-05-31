@@ -12,7 +12,7 @@ def process_video(url, video_id):
     print("Video ID:", video_id)
     print("File Path:", video["file_path"])
 
-    # check file existence and size before transcribing
+
     file_path = video.get("file_path")
     if not file_path or not os.path.exists(file_path):
         print("Error: downloaded file not found:", file_path)
@@ -46,7 +46,7 @@ def process_video(url, video_id):
 
     print("\n===== CHUNKS =====")
     print("Chunk Count:", len(chunks))
-
+    print("Downloaded file:")
     return {
         "video_id": video_id,
         "metadata": video["metadata"],

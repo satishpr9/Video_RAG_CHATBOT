@@ -1,26 +1,43 @@
-from app.rag.chatbot import llm
-from app.rag.prompt import RAG_PROMPT
+from langchain_groq import ChatGroq
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from app.config import settings
 
-from langchain_core.output_parsers import StrOutputParser
+llm = ChatGroq(
+    api_key=settings.GROQ_API_KEY,
+    model="llama-3.3-70b-versatile",
+    temperature=0.2
+)
+prompt = ChatPromptTemplate.from_template("""
+You are a social media analytics expert.
+
+Use ONLY the context below.
+
+Context:
+{context}
+
+Question:
+{question}
+
+If answer is not in context, say "Not found in videos."
+
+Answer:
+""")
+
+def format_docs(docs):
+    return "\n\n".join(
+        f"[Video {d.metadata.get('video_id')} - Chunk {d.metadata.get('chunk_id')}]\n{d.page_content}"
+        for d in docs
+    )
 def create_chain(retriever):
-
-    def format_docs(docs):
-        return "\n\n".join(
-            doc.page_content
-            for doc in docs
-        )
 
     chain = (
         {
-            "context":
-                retriever | format_docs,
-
-            "question":
-                lambda x: x
+            "context": retriever | format_docs,
+            "question": RunnablePassthrough()
         }
-        | RAG_PROMPT
+        | prompt
         | llm
-        | StrOutputParser()
     )
 
     return chain

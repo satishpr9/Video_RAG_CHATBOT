@@ -34,21 +34,25 @@ def ingest(payload: IngestRequest):
     print("\nVIDEO B")
     print("Transcript:", len(video_b["transcript"]))
     print("Chunks:", len(video_b["chunks"]))
-    add_chunks(
+
+   
+    if len(video_a["chunks"]) > 0:
+        add_chunks(
         db,
         video_a["chunks"],
         "A"
     )
 
-    add_chunks(
+    if len(video_b["chunks"]) > 0:
+        add_chunks(
         db,
         video_b["chunks"],
         "B"
     )
-
     VIDEOS["A"] = video_a
     VIDEOS["B"] = video_b
     state.VECTORSTORE = db
+    print("VECTORSTORE SAVED")
     return {
         "status":"success",
         "video_a_chunks":
