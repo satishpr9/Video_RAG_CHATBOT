@@ -1,14 +1,25 @@
 from langchain_core.documents import Document
-from langchain_qdrant import Qdrant
+from langchain_community.vectorstores import Chroma
 
 from app.rag.embeddings import embeddings
+def create_vectorstore():
+
+    return Chroma(
+        collection_name="video_rag",
+        embedding_function=embeddings
+    )
 
 
-def store_chunks(chunks, video_id):
+def add_chunks(
+    vectorstore,
+    chunks,
+    video_id
+):
 
     docs = []
 
     for idx, chunk in enumerate(chunks):
+
         docs.append(
             Document(
                 page_content=chunk,
@@ -18,12 +29,12 @@ def store_chunks(chunks, video_id):
                 }
             )
         )
-
-    vectorstore = Qdrant.from_documents(
-        docs,
-        embeddings,
-        location=":memory:",
-        collection_name="video_chunks"
+    print("Docs Count:", len(docs))
+    if not docs:
+        raise ValueError(
+        "No chunks generated. Transcript may be empty."
     )
-
+    vectorstore.add_documents(docs)
+    print("Chunks Count:", len(chunks))
+    print("Chunks:", chunks[:2])
     return vectorstore

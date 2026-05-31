@@ -1,0 +1,3 @@
+VIDEOS = {}
+
+VECTORSTORE = None

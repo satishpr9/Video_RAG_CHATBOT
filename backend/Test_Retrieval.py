@@ -1,19 +1,17 @@
 from app.rag.store import store_chunks
-from app.rag.retriever import get_retriever
 
 chunks = [
-    "AI startups are growing rapidly.",
-    "Instagram reels get engagement.",
-    "Hooks matter in videos."
+    "Video A uses a strong emotional hook.",
+    "Video B starts slowly."
 ]
 
 db = store_chunks(chunks, "A")
 
-retriever = get_retriever(db)
+retriever = db.as_retriever()
 
-docs = retriever.invoke(
-    "What improves engagement?"
+results = retriever.invoke(
+    "Which video has a stronger hook?"
 )
 
-for d in docs:
-    print(d.page_content)
+for doc in results:
+    print(doc.page_content)
