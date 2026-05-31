@@ -27,7 +27,13 @@ def ingest(payload: IngestRequest):
     )
 
     db = create_vectorstore()
+    print("\nVIDEO A")
+    print("Transcript:", len(video_a["transcript"]))
+    print("Chunks:", len(video_a["chunks"]))
 
+    print("\nVIDEO B")
+    print("Transcript:", len(video_b["transcript"]))
+    print("Chunks:", len(video_b["chunks"]))
     add_chunks(
         db,
         video_a["chunks"],
