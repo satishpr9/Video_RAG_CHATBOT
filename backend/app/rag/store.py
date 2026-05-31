@@ -31,9 +31,8 @@ def add_chunks(
         )
     print("Docs Count:", len(docs))
     if not docs:
-        raise ValueError(
-        "No chunks generated. Transcript may be empty."
-    )
+        print("Warning: No chunks generated. Transcript may be empty. Skipping add.")
+        return vectorstore
     vectorstore.add_documents(docs)
     print("Chunks Count:", len(chunks))
     print("Chunks:", chunks[:2])
