@@ -5,7 +5,7 @@ def engagement_rate(
 ):
 
     if not views:
-        return None
+        return "unavailable"
 
     return round(
         ((likes + comments) / views) * 100,

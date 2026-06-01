@@ -24,4 +24,7 @@ def ask_stream(question):
             "question": question,
             "answer": full_answer
         }
+        
+    
     )
+

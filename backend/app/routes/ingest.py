@@ -151,6 +151,8 @@ def ingest(payload: IngestRequest):
             video_a["metadata"].get(
                 "upload_date"
             ),
+         "hook":
+        video_a["hook"],
 
         "engagement_rate":
             rate_a
@@ -199,6 +201,9 @@ def ingest(payload: IngestRequest):
             video_b["metadata"].get(
                 "upload_date"
             ),
+          "hook":
+             video_b["hook"],
+
 
         "engagement_rate":
             rate_b

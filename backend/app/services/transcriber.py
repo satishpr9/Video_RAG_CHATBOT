@@ -32,8 +32,10 @@ def transcribe_audio(file_path):
                 raise
             model = _model
         result = model.transcribe(file_path, fp16=False)
-
-    text = result.get("text", "")
-    print("Transcript preview:")
-    print(text[:300])
-    return text
+    
+    return {
+        "text": result["text"],
+        "segments": result["segments"]
+    }
+    
+    

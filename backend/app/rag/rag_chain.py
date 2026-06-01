@@ -19,6 +19,10 @@ You are a social media analytics expert.
 Conversation History:
 {history}
 
+                                          
+Analytics Data:
+{stats}
+
 Context:
 {context}
 
@@ -53,7 +57,29 @@ def get_history():
             for item in state.CHAT_HISTORY[-5:]
         ]
     )
+def get_stats_context():
 
+    stats = state.VIDEO_STATS
+
+    return f"""
+VIDEO ANALYTICS
+
+Video A:
+Title: {stats.get('A', {}).get('title')}
+Views: {stats.get('A', {}).get('views')}
+Hook: {stats.get('A', {}).get('hook')}
+Likes: {stats.get('A', {}).get('likes')}
+Comments: {stats.get('A', {}).get('comments')}
+Engagement Rate: {stats.get('A', {}).get('engagement_rate')}
+
+Video B:
+Title: {stats.get('B', {}).get('title')}
+Views: {stats.get('B', {}).get('views')}
+Hook: {stats.get('A', {}).get('hook')}
+Likes: {stats.get('B', {}).get('likes')}
+Comments: {stats.get('B', {}).get('comments')}
+Engagement Rate: {stats.get('B', {}).get('engagement_rate')}
+"""
 
 def create_chain(retriever):
 
@@ -61,7 +87,8 @@ def create_chain(retriever):
         {
             "context": retriever | format_docs,
             "question": RunnablePassthrough(),
-            "history": lambda x: get_history()
+            "history": lambda x: get_history(),
+            "stats": lambda x: get_stats_context()
         }
         | prompt
         | llm
