@@ -1,3 +1,4 @@
 VIDEOS = {}
-
+VIDEO_STATS = {}
 VECTORSTORE = None
+CHAT_HISTORY = []

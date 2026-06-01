@@ -1,43 +1,27 @@
 import app.rag.state as state
 
 from app.rag.rag_chain import create_chain
-
-def ask_question(question):
-    print("VECTORSTORE =", state.VECTORSTORE)
-    if state.VECTORSTORE is None:
-
-        return {
-            "error":
-            "Please ingest videos first."
-        }
+def ask_stream(question):
 
     retriever = state.VECTORSTORE.as_retriever(
-        search_kwargs={
-            "k": 5
-        }
+        search_kwargs={"k": 5}
     )
-
-    docs = retriever.invoke(question)
 
     chain = create_chain(retriever)
 
-    answer = chain.invoke(question)
+    full_answer = ""
 
-    sources = []
+    for chunk in chain.stream(question):
 
-    for doc in docs:
+        if hasattr(chunk, "content"):
 
-        sources.append(
-            {
-                "video_id":
-                    doc.metadata.get("video_id"),
+            full_answer += chunk.content
 
-                "chunk_id":
-                    doc.metadata.get("chunk_id")
-            }
-        )
+            yield chunk.content
 
-    return {
-        "answer": answer,
-        "sources": sources
-    }
+    state.CHAT_HISTORY.append(
+        {
+            "question": question,
+            "answer": full_answer
+        }
+    )
