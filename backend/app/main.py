@@ -11,3 +11,9 @@ app.include_router(history_router)
 @app.get("/")
 def home():
     return {"message": "Video RAG API"}
+
+@app.get("/health")
+def health():
+    return {
+        "status":"ok"
+    }
