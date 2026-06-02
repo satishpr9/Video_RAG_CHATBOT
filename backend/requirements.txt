@@ -1,9 +1,11 @@
 fastapi
 python-dotenv
 pydantic
+chromadb
 langchain-core
 langchain-groq
 langchain-huggingface
+sentence-transformers
 langchain-text-splitters
 langchain-community
 yt-dlp
