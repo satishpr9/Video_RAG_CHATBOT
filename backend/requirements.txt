@@ -1,0 +1,11 @@
+fastapi
+python-dotenv
+pydantic
+langchain-core
+langchain-groq
+langchain-huggingface
+langchain-text-splitters
+langchain-community
+yt-dlp
+openai-whisper
+uvicorn
