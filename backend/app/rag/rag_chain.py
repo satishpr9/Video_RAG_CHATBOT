@@ -75,7 +75,7 @@ Engagement Rate: {stats.get('A', {}).get('engagement_rate')}
 Video B:
 Title: {stats.get('B', {}).get('title')}
 Views: {stats.get('B', {}).get('views')}
-Hook: {stats.get('A', {}).get('hook')}
+Hook: {stats.get('B', {}).get('hook')}
 Likes: {stats.get('B', {}).get('likes')}
 Comments: {stats.get('B', {}).get('comments')}
 Engagement Rate: {stats.get('B', {}).get('engagement_rate')}

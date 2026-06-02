@@ -2,11 +2,16 @@ from langchain_core.documents import Document
 from langchain_community.vectorstores import Chroma
 
 from app.rag.embeddings import embeddings
+import os
+
+PERSIST_DIR = os.getenv("CHROMA_DB_DIR", "chroma_db")
+
 def create_vectorstore():
 
     return Chroma(
         collection_name="video_rag",
-        embedding_function=embeddings
+        embedding_function=embeddings,
+        persist_directory=PERSIST_DIR
     )
 
 
