@@ -12,7 +12,7 @@ Setup for backend:-
       pip install -r requirement.txt
   4. Run the Backend Server:
        uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-       The API will be available at `http://localhost:8000`.
+ The API will be available at `http://localhost:8000`.
   
 
 Setup for Fronted:-
